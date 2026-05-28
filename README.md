@@ -1,4 +1,4 @@
-# Nome do Jogo
+# Frangonauta
 
 Projeto final da disciplina de Introdução a Algoritmos/Programação, desenvolvido com Python e Pygame.
 
@@ -6,10 +6,10 @@ Este repositório é um template para os grupos da disciplina. A proposta é com
 
 ## Integrantes do grupo
 
-- Nome do integrante 1
-- Nome do integrante 2
-- Nome do integrante 3
-- Nome do integrante 4
+- Guilherme Miranda Presot
+- Maria Paula Barbosa de Almeida
+- Alexandre Ricardo de Moura 
+- Ian Souza
 
 ## Estrutura do projeto
 
@@ -22,43 +22,24 @@ Este repositório é um template para os grupos da disciplina. A proposta é com
 
 ## Descrição do jogo
 
-Descreva brevemente a ideia principal do jogo.
-
-Exemplo:
-
-> O jogo consiste em controlar um personagem que deve coletar moedas e evitar obstáculos. O jogador ganha pontos ao coletar itens e perde vidas ao colidir com obstáculos. A partida termina quando o tempo acaba ou quando o jogador perde todas as vidas.
+Na tela inicial, deve aparecer para iniciar o jogo e o ranking das jogadas feitas, após iniciar a partida, deve aparecer o frango astronauta, em conjunto com os obstáculos, a temperatura atual do frango, possíveis maneiras de aumentar a temperatura dele e batatas assadas (pontuação). O jogador controla a movimentação do frangonauta, além disso, ele deve desviar dos obstáculos, obter o calor necessário para manter o frango quente para não congelar no espaço e coletar o maior número possível de batatas assadas para aumentar a pontuação final. Durante a partida, o jogador deve ter cuidado com dois principais desafios, os meteoros (obstáculos) e com o frio (sobrevivência).
 
 ## Objetivo do jogador
 
-Explique o que o jogador precisa fazer para vencer ou avançar no jogo.
-
-Exemplo:
-
-> O objetivo é coletar a maior quantidade possível de itens antes que o tempo acabe, evitando colisões com os obstáculos.
+Coletar o maior número possível de itens, evitar obstáculos e chegar até o final.
 
 ## Regras do jogo
 
-Liste as principais regras do jogo.
-
-Exemplo:
-
-- O jogador se movimenta usando as setas do teclado.
-- Cada item coletado aumenta a pontuação.
-- Colidir com um obstáculo reduz a quantidade de vidas.
-- A partida termina quando o jogador perde todas as vidas ou quando o tempo acaba.
+- Regra 1: O frangonauda começa com 40°C;
+- Regra 2: A partida termina quando o jogador atinge algum obstáculo ou a temperatura chegue a 0°C;
+- Regra 3: Cada batata coletada vale 15 pontos;
+- Regra 4: O jogador vence quando chega ao final do mapa;
+- Regra 5: O jogador tem 90 segundos para fazer a tentativa;
+- Regra 6: A temperatura do franngonauta diminui a cada 5 segundos.
 
 ## Controles
 
-Informe as teclas ou comandos utilizados no jogo.
-
-Exemplo:
-
-- Seta para cima: mover para cima
-- Seta para baixo: mover para baixo
-- Seta para esquerda: mover para esquerda
-- Seta para direita: mover para direita
-- Espaço: realizar ação
-- ESC: sair do jogo
+Espaço: salto e ESC: sair do jogo
 
 ## Como executar o projeto
 
