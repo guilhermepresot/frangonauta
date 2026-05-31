@@ -13,54 +13,58 @@ Frangonauta
 
 ## 3. Tipo de jogo
 
-Jogo de desviar de obstáculos e sobrevivência.
+Jogo de sobrevivência por tempo com desvio de obstáculos.
 
 ## 4. Descrição geral do jogo
 
-Na tela inicial, deve aparecer para iniciar o jogo e o ranking das jogadas feitas, após iniciar a partida, deve aparecer o frango astronauta, em conjunto com os obstáculos, a temperatura atual do frango, possíveis maneiras de aumentar a temperatura dele e batatas assadas (pontuação). O jogador controla a movimentação do frangonauta, além disso, ele deve desviar dos obstáculos, obter o calor necessário para manter o frango quente para não congelar no espaço e coletar o maior número possível de batatas assadas para aumentar a pontuação final. Durante a partida, o jogador deve ter cuidado com dois principais desafios, os meteoros (obstáculos) e com o frio (sobrevivência).
+Na tela inicial aparecem a opção de iniciar o jogo e o ranking das partidas anteriores. Após iniciar, o jogador controla o Frangonauta (um frango astronauta que se move pelo espaço usando as setas do teclado). Na tela aparecem meteoros como obstáculos, itens de fogo para aquecer o frango e batatas assadas para pontuar. O jogador deve sobreviver os 90 segundos completos desviando dos meteoros, coletando fogo para manter a temperatura acima de 0 °C e coletando batatas para maximizar a pontuação final.
 
 ## 5. Objetivo do jogador
 
-Coletar o maior número possível de itens, evitar obstáculos e chegar até o final.
+Sobreviver pelo tempo máximo de 90 segundos, mantendo a temperatura do Frangonauta acima de 0 °C e coletando o maior número possível de batatas assadas para atingir a maior pontuação no ranking.
 
 ## 6. Regras principais
 
-- Regra 1: O frangonauda começa com 40°C;
-- Regra 2: A partida termina quando o jogador atinge algum obstáculo ou a temperatura chegue a 0°C;
-- Regra 3: Cada batata coletada vale 15 pontos;
-- Regra 4: O jogador vence quando chega ao final do mapa;
-- Regra 5: O jogador tem 90 segundos para fazer a tentativa;
-- Regra 6: A temperatura do franngonauta diminui a cada 5 segundos.
+- O Frangonauta começa com 40°C de temperatura;
+- A temperatura diminui 8 °C a cada 5 segundos;
+- Coletar um item de fogo aumenta a temperatura em 20 °C;
+- Cada batata assada coletada vale 15 pontos;
+- A partida termina se o jogador colidir com um meteoro ou se a temperatura chegar a 0 °C;
+- O jogador vence se sobreviver os 90 segundos completos.
 
 ## 7. Condição de vitória
 
-Chegar até o final da fase.
+Completar os 90 segundos sem que a temperatura chegue a 0 °C.
 
 ## 8. Condição de derrota ou encerramento
 
-Temperatura zerada ou não desviar do meteoro.
+A partida termina quando o Frangonauta colide com um meteoro ou quando sua temperatura atinge 0 °C.
 
 ## 9. Elementos previstos no jogo
 
 ## Jogador ou elemento principal
 
-Um frangonauta controlado pela barra do espaço do teclado.
+O Frangonauta, controlado pelas setas do teclado (cima, baixo, esquerda, direita), movendo-se livremente pela tela.
 
 ## Obstáculos, inimigos ou desafios
 
-Meteóros aparecem em posições aleatórias e devem ser evitados e o frio é uma condição que deve ser evitada.
+Meteoros surgem em posições aleatórias na tela e devem ser evitados. O frio é um desafio constante: a temperatura cai a cada 5 segundos de partida.
 
 ## Itens, alvos ou objetos de interação
 
-Batatas aparecem na tela e aumentam a pontuação quando coletadas e o fogo coletado aumenta a temperatura do frangonauta.
+Batatas assadas aparecem na tela e valem 15 pontos cada ao serem coletadas. Itens de fogo aparecem na tela e aumentam a temperatura do Frangonauta em 20 °C ao serem coletados.
 
 ## Pontuação, vidas, tempo ou progresso
 
-O frangonauta começa com 40°C de temperatura e ganha 20°C por fogo coletado. As batatas fazem o jogador ganhar 15 pontos. O jogador tem no total 90 segundos para completar o percurso
+O Frangonauta começa com 40 °C. A temperatura cai 8 °C a cada 5 segundos. O jogador tem 90 segundos para sobreviver e acumular pontos com as batatas coletadas.
  
 ## 10. Controles previstos
 
-Espaço: salto e ESC: sair do jogo
+- Seta para cima: mover para cima
+- Seta para baixo: mover para baixo
+- Seta para esquerda: mover para esquerda
+- Seta para direita: mover para direita
+- ESC: sair do jogo
 
 ## 11. Organização inicial do código
 
@@ -78,21 +82,22 @@ Espaço: salto e ESC: sair do jogo
 
 ## 13. Principais dificuldades esperadas
 
-- Dificuldade 1: colisão entre objetos;
-- Dificuldade 2: controle de tempo;
-- Dificuldade 3: organização do código;
-- Dificuldade 4: uso do GitHub;
-- Dificuldade 5: testes;
-- Dificuldade 6: posição aleatória de objetos.
+- Colisão entre objetos
+- Controle de tempo e queda de temperatura
+- Organização do código
+- Uso do GitHub
+- Testes
+- Posicionamento aleatório de objetos na tela
 
 ## 14. Escopo mínimo para a entrega final
 
-A versão mínima do jogo será o personagem (frangonauta) controlado pela tecla do espaço, obstáculos (meteoros) que vão aparecendo e devem ser evitados, sistema de "vida" (temperatura do frango que deve ser controlada para não atingir 0°C), sistema de pontuação (batatas assadas que devem ser coletadas para aumentar a pontuação do ranking), tela de fim de jogo
+A versão mínima do jogo contará com: o Frangonauta controlado pelas setas do teclado; meteoros surgindo aleatoriamente e que devem ser desviados; sistema de temperatura (começa em 40 °C, cai 8 °C cada 5 segundos e encerra o jogo ao chegar a 0 °C); itens de fogo que recuperam temperatura; sistema de pontuação com batatas assadas; contador de 90 segundos; e tela de fim de jogo com pontuação.
 
 ## 15. Possíveis melhorias, caso haja tempo
 
-- Melhoria 1: tela inicial;
-- Melhoria 2: animações;
-- Melhoria 3: aumento de dificuldade;
-- Melhoria 4: diferentes personagens;
-- Melhoria 5: menu de pausa.
+- Tela inicial com menu e ranking
+- Animações do personagem e dos objetos
+- Aumento progressivo de dificuldade (mais meteoros, queda de temperatura mais rápida)
+- Diferentes personagens selecionáveis
+- Menu de pausa
+- Sons e trilha sonora
