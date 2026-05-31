@@ -9,7 +9,7 @@ Frangonauta
 - Nome 1: Guilherme Miranda Presot
 - Nome 2: Maria Paula Barbosa de Almeida
 - Nome 3: Alexandre Ricardo de Moura 
-- Nome 4: Ian Souza
+- Nome 4: Ian Souza Maciel
 
 ## 3. Tipo de jogo
 
@@ -60,10 +60,7 @@ O Frangonauta começa com 40 °C. A temperatura cai 8 °C a cada 5 segundos. O j
  
 ## 10. Controles previstos
 
-- Seta para cima: mover para cima
-- Seta para baixo: mover para baixo
-- Seta para esquerda: mover para esquerda
-- Seta para direita: mover para direita
+- tecla de espaço: salto
 - ESC: sair do jogo
 
 ## 11. Organização inicial do código
@@ -80,7 +77,13 @@ O Frangonauta começa com 40 °C. A temperatura cai 8 °C a cada 5 segundos. O j
 - sons gratuitos;
 - tutorial usado apenas como referência.
 
-## 13. Principais dificuldades esperadas
+## 13. Testes planejados
+
+- Funcionais: garantir que todas as funcionalidades ocorram
+- Jogabilidade: avaliar dificuldade e diversão do jogo
+- Desempenho: medir o uso de memória e estabilidade
+
+## 14. Principais dificuldades esperadas
 
 - Colisão entre objetos
 - Controle de tempo e queda de temperatura
@@ -89,7 +92,7 @@ O Frangonauta começa com 40 °C. A temperatura cai 8 °C a cada 5 segundos. O j
 - Testes
 - Posicionamento aleatório de objetos na tela
 
-## 14. Escopo mínimo para a entrega final
+## 15. Escopo mínimo para a entrega final
 
 A versão mínima do jogo contará com: o Frangonauta controlado pelas setas do teclado; meteoros surgindo aleatoriamente e que devem ser desviados; sistema de temperatura (começa em 40 °C, cai 8 °C cada 5 segundos e encerra o jogo ao chegar a 0 °C); itens de fogo que recuperam temperatura; sistema de pontuação com batatas assadas; contador de 90 segundos; e tela de fim de jogo com pontuação.
 
