@@ -69,10 +69,10 @@ O Frangonauta começa com 40 °C. A temperatura cai 8 °C a cada 5 segundos. O j
 ## 11. Organização inicial do código
 
 - `main.py`: inicia o jogo;
-- `src/jogo.py`: contém o loop principal;
+- `src/jogo.py`: contém o loop principal, usa listas para meteoros, itens de fogo e batatas na tela;
 - `src/config.py`: guarda configurações como tamanho da tela e cores;
-- `src/funcoes.py`: contém funções auxiliares;
-- `src/dados.py`: contém funções de leitura e escrita de arquivos.
+- `src/funcoes.py`: contém funções auxiliares, inclui funções de colisão e controle de temperatura, que serão testadas;
+- `src/dados.py`: contém funções de leitura e escrita de arquivos, salva e carrega o ranking (nome e pontuação) em arquivo .txt ou .json; usa lista de dicionários.
 
 ## 12. Recursos externos previstos
 
