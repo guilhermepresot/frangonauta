@@ -1,11 +1,12 @@
 import pygame
+import random
 
 from src.config import (
     LARGURA_TELA,
     ALTURA_TELA,
     FPS,
     TITULO_JOGO,
-    CINZA,
+    PRETO,
     CAMINHO_RECORDE,
     CAMINHO_SPRITES,
 )
@@ -16,6 +17,7 @@ from src.funcoes import (
     limitar_valor,
     verificar_colisao,
     tomar_dano,
+    verificar_posicao
 )
 from src.sprites import pegar_sprite
 from src.dados import (
@@ -23,11 +25,14 @@ from src.dados import (
     carregar_recorde,
 )
 
+from src.menu import menu
 
 def executar_jogo():
     """Executa o loop principal do jogo e controla estado, colisões e pontuação."""
     pygame.init()
-    
+    if not menu():
+        pygame.quit()
+        return
 
     tela = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
     pygame.display.set_caption(TITULO_JOGO)
@@ -46,11 +51,12 @@ def executar_jogo():
 
     # Morcego: usando tamanho 180x120 por causa das asas abertas
     bat_image = pegar_sprite("assets/imagens/Meteor1.png", x=0, y=0, width=1200, height=900, scale=0.15)
-    bat_image = pegar_sprite("assets/imagens/Meteor1.png", x=0, y=0, width=1200, height=900, scale=0.15)
     # 2. Criando a estrutura de Sprites usando Dicionários
+    x_jogador = 150
+    y_jogador = 150
     jogador = {
         "imagem": player_image,
-        "rect": player_image.get_rect(topleft=(100, 100))
+        "rect": player_image.get_rect(topleft=(x_jogador, y_jogador))
     }
 
     gema = {
@@ -60,13 +66,15 @@ def executar_jogo():
     
     inimigo = {
         "imagem": bat_image,
-        "rect": bat_image.get_rect(topleft=(200, 500))
+        "rect": bat_image.get_rect(topleft=(LARGURA_TELA ,300))
     }
 
-    velocidade = 5
+    gravidade = 1
+    velocidade = 150
     pontos = 0
-    vidas = 3
+    vidas = 300
     recorde = carregar_recorde(CAMINHO_RECORDE)
+
 
     # Loop principal: processa entrada, atualiza estado e renderiza a cena.
     while rodando:
@@ -76,17 +84,14 @@ def executar_jogo():
             if evento.type == pygame.QUIT:
                 rodando = False
 
-        teclas = pygame.key.get_pressed()
-
-        # Movimentação alterando direto os eixos X e Y do retângulo do jogador
-        if teclas[pygame.K_LEFT]:
-            jogador["rect"].x -= velocidade
-        if teclas[pygame.K_RIGHT]:
-            jogador["rect"].x += velocidade
-        if teclas[pygame.K_UP]:
-            jogador["rect"].y -= velocidade
-        if teclas[pygame.K_DOWN]:
-            jogador["rect"].y += velocidade
+        # Movimentação alterando direto o eixo Y do retângulo do jogador
+            if evento.type == pygame.KEYDOWN:
+                if evento.key == pygame.K_SPACE:
+                    jogador["rect"].y -= velocidade
+            
+        # Gravidade   
+        jogador["rect"].y += gravidade
+        inimigo["rect"].x -= 3
 
         # Limitando o jogador dentro das bordas da tela usando as propriedades do Rect
         jogador["rect"].x = limitar_valor(jogador["rect"].x, 0, LARGURA_TELA - jogador["rect"].width)
@@ -110,15 +115,12 @@ def executar_jogo():
         if verificar_colisao(jogador["rect"], inimigo["rect"]):
             vidas = tomar_dano(vidas, 1)
 
-            # Afasta o inimigo ao colidir
-            inimigo["rect"].x += 80
-            inimigo["rect"].y += 50
-
-            if inimigo["rect"].x > LARGURA_TELA - inimigo["rect"].width:
-                inimigo["rect"].x = 50
-            if inimigo["rect"].y > ALTURA_TELA - inimigo["rect"].height:
-                inimigo["rect"].y = 50
-
+        if verificar_posicao(inimigo, LARGURA_TELA):
+            # Novo obstáculo
+            numero_aleatorio_y = random.randint(1, ALTURA_TELA)
+            inimigo["rect"].x = LARGURA_TELA
+            inimigo["rect"].y = numero_aleatorio_y
+        
         # Regras de fim de jogo e recorde
         if jogador_perdeu(vidas):
             rodando = False
@@ -131,7 +133,7 @@ def executar_jogo():
             f"{TITULO_JOGO} | Pontos: {pontos} | Recorde: {recorde} | Vidas: {vidas}"
         )
 
-        tela.fill(CINZA)
+        tela.fill(PRETO)
 
         # Desenhando os elementos na tela passando a imagem e o rect de cada dicionário
         tela.blit(gema["imagem"], gema["rect"])
