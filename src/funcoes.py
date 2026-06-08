@@ -25,3 +25,7 @@ def limitar_valor(valor, minimo, maximo):
 def verificar_colisao(retangulo_1, retangulo_2):
     """Verifica sobreposição entre dois retângulos do Pygame."""
     return retangulo_1.colliderect(retangulo_2)
+
+def verificar_posicao(retangulo, largura):
+    if retangulo["rect"].x <= 0:
+        return True
