@@ -1,26 +1,25 @@
 import pygame
             
 def pegar_sprite(local_arquivo, x, y, width, height, scale=1):
-    """Corta um único elemento de uma spritesheet BMP e remove o fundo."""
+    """Corta um único elemento de uma spritesheet e remove o fundo."""
     
-    # 1. Carrega o BMP e usa .convert() (sem alpha) para otimizar a velocidade
-    sheet = pygame.image.load(local_arquivo).convert()
-
-    # 2. Cria uma superfície padrão para o recorte (não precisa de SRCALPHA aqui)
-    image = pygame.Surface((width, height))
+    sheet = pygame.image.load(local_arquivo)
     
-    # 3. Copia o pedaço da folha BMP para a nossa nova imagem
+    # Se a imagem tiver transparência (PNG), usa convert_alpha
+    if sheet.get_masks()[3] != 0:
+        sheet = sheet.convert_alpha()
+        image = pygame.Surface((width, height), pygame.SRCALPHA)
+    else:
+        sheet = sheet.convert()
+        image = pygame.Surface((width, height))
+        
     image.blit(sheet, (0, 0), (x, y, width, height))
     
-    # 4. CONFIGURAÇÃO DA TRANSPARÊNCIA (O segredo para o BMP)
-    # Pegamos a cor do pixel no canto superior esquerdo (0,0) do recorte, 
-    # assumindo que o fundo do seu sprite começa ali.
-    cor_do_fundo = image.get_at((0, 0))
+    # Remove fundo apenas para imagens sem alpha (BMP)
+    if not (sheet.get_masks()[3] != 0):
+        cor_do_fundo = image.get_at((0, 0))
+        image.set_colorkey(cor_do_fundo)
     
-    # Dizemos ao Pygame para ignorar essa cor específica na hora de desenhar
-    image.set_colorkey(cor_do_fundo)
-    
-    # 5. Aplica o redimensionamento, se houver
     if scale != 1:
         novo_largura = int(width * scale)
         novo_altura = int(height * scale)

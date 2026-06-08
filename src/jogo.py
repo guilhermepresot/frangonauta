@@ -39,14 +39,14 @@ def executar_jogo():
 
 
     # Jogador: usando tamanho 110x110 para capturar o quadrado perfeitamente
-    player_image = pegar_sprite(CAMINHO_SPRITES, x=110, y=120, width=190, height=190, scale=0.5)
-
+    player_image = pegar_sprite("assets/imagens/frangonauta.png", x=0, y=0, width=980, height=1080, scale=0.2)
+    
     # Gema pequena: usando tamanho 64x64
-    gem_image    = pegar_sprite(CAMINHO_SPRITES, x=900, y=690, width=200, height=200, scale=0.5)
+    gem_image    = pegar_sprite("assets/imagens/batata.png", x=0, y=0, width=1400, height=900, scale=0.2)
 
     # Morcego: usando tamanho 180x120 por causa das asas abertas
-    bat_image    = pegar_sprite(CAMINHO_SPRITES, x=905, y=1060, width=200, height=130, scale=0.5)
-    
+    bat_image = pegar_sprite("assets/imagens/Meteor1.png", x=0, y=0, width=1200, height=900, scale=0.15)
+    bat_image = pegar_sprite("assets/imagens/Meteor1.png", x=0, y=0, width=1200, height=900, scale=0.15)
     # 2. Criando a estrutura de Sprites usando Dicionários
     jogador = {
         "imagem": player_image,
