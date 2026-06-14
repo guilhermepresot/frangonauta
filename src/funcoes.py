@@ -1,3 +1,4 @@
+import pygame
 def calcular_pontos(pontos_atual, pontos_ganhos):
     """Soma os pontos ganhos à pontuação atual."""
     return pontos_atual + pontos_ganhos
@@ -29,3 +30,9 @@ def verificar_colisao(retangulo_1, retangulo_2):
 def verificar_posicao(retangulo, largura):
     if retangulo["rect"].x <= 0:
         return True
+
+def exibe_mensagem(msg, tamanho, cor):
+    fonte = pygame.font.SysFont("comicsansms", tamanho, True, False)
+    mensagem = f'{msg}'
+    texto_formato = fonte.render(mensagem, True, cor)
+    return texto_formato
