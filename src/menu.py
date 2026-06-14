@@ -1,8 +1,13 @@
 import pygame
+from src.config import (
+    LARGURA_TELA,
+    ALTURA_TELA,
+    TITULO_JOGO
+)
 
 def menu():
     pygame.init()
-    tela = pygame.display.set_mode((800, 600))
+    tela = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
     pygame.display.set_caption("Menu")
     fonte = pygame.font.SysFont("Arial", 48)
     fonte_pequena = pygame.font.SysFont("Arial", 32)
@@ -10,8 +15,8 @@ def menu():
     rodando = True
     while rodando: 
 
-        titulo = fonte.render("FRANGONAUTA", True, (255, 255, 255))
-        tela.blit(titulo, (800//2 - titulo.get_width()//2, 150))
+        titulo = fonte.render(f"{TITULO_JOGO}", True, (255, 255, 255))
+        tela.blit(titulo, (LARGURA_TELA//2 - titulo.get_width()//2, 150))
 
         
         botao = pygame.Rect(300, 300, 200, 60)

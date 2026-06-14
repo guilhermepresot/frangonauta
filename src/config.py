@@ -11,3 +11,4 @@ CINZA = (212,212,212)
 
 CAMINHO_RECORDE = "data/recorde.txt"
 CAMINHO_SPRITES = "assets/imagens/spritesheet.bmp"
+CAMINHO_RANKING = "data/ranking.txt"

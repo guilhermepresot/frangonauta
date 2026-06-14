@@ -1,19 +1,17 @@
 import random
+import pygame
 
 def calcular_pontos(pontos_atual, pontos_ganhos):
     """Soma os pontos ganhos à pontuação atual."""
     return pontos_atual + pontos_ganhos
 
-
 def tomar_dano(vida_atual, dano):
     """Reduz a vida atual com base no dano recebido."""
     return vida_atual - dano
 
-
 def jogador_perdeu(vidas):
     """Indica se o jogador ficou sem vidas."""
     return vidas <= 0
-
 
 def limitar_valor(valor, minimo, maximo):
     """Mantém um valor dentro do intervalo [minimo, maximo]."""
@@ -23,11 +21,10 @@ def limitar_valor(valor, minimo, maximo):
         return maximo
     return valor
 
-
 def verificar_colisao(retangulo_1, retangulo_2):
     """Verifica sobreposição entre dois retângulos do Pygame."""
     return retangulo_1.colliderect(retangulo_2)
-    
+   
 def aleatorizar_posicao(elemento, altura, gerador):
     elemento.y = gerador(0, altura)
 
@@ -36,17 +33,17 @@ def criar_objeto(lista, imagem, function, altura, gerador=random.randint):
     aleatorizar_posicao(objeto, altura, gerador)
     lista.append(objeto)
 
-def movimentacao(lista, velocidade_x, velocidade_y, largura, jogador):
-    #seção da movimentação do meteoro
-    for meteoro in lista:
-        meteoro.x += velocidade_x
-    while len(lista) > 0 and lista[0].x + largura < 0:
-        lista.pop(0) #salva memoria de ser gasta com obstáculos antigos
-
+def movimentacao_jogador(velocidade_y, jogador):
     #seção da movimentação do frango
     jogador.y += velocidade_y
 
-def movimentacao_batata(lista, velocidade_x):
-    #seção da movimentação da batata
-    for meteoro in lista:
-        meteoro.x += velocidade_x
+def movimentacao_objeto(lista, velocidade_x):
+    #seção da movimentação dos objetos
+    for objeto in lista:
+        objeto.x += velocidade_x
+
+def exibe_mensagem(msg, tamanho, cor):
+    fonte = pygame.font.SysFont("comicsansms", tamanho, True, False)
+    mensagem = f'{msg}'
+    texto_formato = fonte.render(mensagem, True, cor)
+    return texto_formato

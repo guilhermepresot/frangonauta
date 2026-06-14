@@ -9,6 +9,7 @@ from src.config import (
     PRETO,
     CAMINHO_RECORDE,
     CAMINHO_SPRITES,
+    CAMINHO_RANKING
 )
 
 from src.funcoes import (
@@ -18,13 +19,15 @@ from src.funcoes import (
     verificar_colisao,
     tomar_dano,
     criar_objeto,
-    movimentacao,
-    movimentacao_batata
+    movimentacao_jogador,
+    movimentacao_objeto,
+    exibe_mensagem,
 )
 from src.sprites import pegar_sprite
 from src.dados import (
     salvar_recorde,
     carregar_recorde,
+    salvar_ranking
 )
 
 from src.menu import menu
@@ -45,13 +48,13 @@ def executar_jogo():
     #class do meteoro
     meteoro_x = LARGURA_TELA
     meteoro_y = 0
-    meteoro__largura = 182
-    meteoro__altura = 57
+    meteoro__largura = 214
+    meteoro__altura = 61
     class Meteoro(pygame.Rect):
         def __init__(self, img):
             pygame.Rect.__init__(self, meteoro_x, meteoro_y, meteoro__largura, meteoro__altura)
-            self.img = img
-
+            self.img = img    
+    
     #class do batata
     batata_x = LARGURA_TELA
     batata_y = 0
@@ -63,7 +66,7 @@ def executar_jogo():
             self.img = img        
 
     #class do frangonauta
-    x_jogador = 150
+    x_jogador = 125
     y_jogador = 150
     largura_jogador = 212/1.5
     altura_jogador = 124
@@ -97,16 +100,20 @@ def executar_jogo():
     velocidade_frango = 0
     gravidade = 0.2
     pontos = 0
+    pontuacoes = []
+    pontos_anteriores = pontos
     vidas = 3
     recorde = carregar_recorde(CAMINHO_RECORDE)
+    tempo_inicial = pygame.time.get_ticks()
+    TEMPO_VITORIA = 90 # tempo para ganhar o jogo
 
     #timer para quando os meteoros são criados
     criar_meteoro_tempo = pygame.USEREVENT + 0
-    pygame.time.set_timer(criar_meteoro_tempo, 1500) #1.5 segundos
+    pygame.time.set_timer(criar_meteoro_tempo, 2000) #2 segundos
 
     #timer para quando as batatas são criadas
-    criar_batata_tempo = pygame.USEREVENT + 1
-    pygame.time.set_timer(criar_batata_tempo, 5000) #5 segundos
+    criar_batata_tempo = pygame.USEREVENT + 2
+    pygame.time.set_timer(criar_batata_tempo, 3000) #3 segundos
 
     #analisar se já perdeu dano ou recebeu a pontuação do objeto
     colisão_pontos = False
@@ -117,6 +124,14 @@ def executar_jogo():
 
     #loop principal: processa entrada, atualiza estado e renderiza a cena.
     while rodando:
+
+        tempo_decorrido = (pygame.time.get_ticks() - tempo_inicial) // 1000
+        if tempo_decorrido >= TEMPO_VITORIA:
+            game_win = exibe_mensagem("VOCÊ VENCEU!", 40 , ( 0 , 100 , 0) )
+            tela.blit( game_win , (LARGURA_TELA // 2 , ALTURA_TELA // 2 ) )
+            pygame.display.flip()
+            pygame.time.wait(4000)  # espera 4 segundos para aparecer a mensagem
+            rodando = False
         relogio.tick(FPS)
 
         for evento in pygame.event.get():
@@ -132,21 +147,23 @@ def executar_jogo():
             if evento.type == pygame.KEYDOWN:
                 if evento.key == pygame.K_SPACE:
                     velocidade_frango = -10
-
-        print(timer)
             
         #função de movimentação dos elementos e gravidade
-        movimentacao(meteoros, velocidade_meteoroBatata, velocidade_frango, meteoro__largura, frango)
+        movimentacao_jogador(velocidade_frango, frango)
         velocidade_frango += gravidade
-        movimentacao_batata(batatas, velocidade_meteoroBatata)
+        movimentacao_objeto(batatas, velocidade_meteoroBatata)
+        movimentacao_objeto(meteoros, velocidade_meteoroBatata)
 
         #limite de tela
         frango.y = max(frango.y, -10)
         frango.y = min(frango.y, ALTURA_TELA-100)
 
-        
-        #regras de fim de jogo e recorde
+        #mensagens de fim de jogo e recorde
         if jogador_perdeu(vidas):
+            game_over = exibe_mensagem("PERDEU O JOGO!", 40, ( 100 , 0 , 0 ) )
+            tela.blit( game_over , (LARGURA_TELA // 2 , ALTURA_TELA // 2 ) )
+            pygame.display.flip()
+            pygame.time.wait(4000)  # espera 4 segundos para aparecer a mensagem
             rodando = False
 
         #pontuação das batatas
@@ -154,6 +171,7 @@ def executar_jogo():
             if colisão_pontos == False:
                 colisão_pontos = True
                 pontos = calcular_pontos(pontos, 15)
+                batata.y = -50
         else:
             colisão_pontos = False
 
@@ -165,22 +183,34 @@ def executar_jogo():
         else:
             colisão_vida = False
 
+        #listando as pontuações da partida atual
+        if pontos > pontos_anteriores:
+            pontuacoes.append(pontos)
+        pontos_anteriores
+
         #obtenção de record
         if pontos > recorde:
             recorde = pontos
             salvar_recorde(CAMINHO_RECORDE, recorde)
 
+        #obtenção do ranking
+        if pontos != pontos_anteriores:
+            salvar_ranking(CAMINHO_RANKING, pontos)
+
         pygame.display.set_caption(
-            f"{TITULO_JOGO} | Pontos: {pontos} | Recorde: {recorde} | Vidas: {vidas}"
+            f"{TITULO_JOGO} | Tempo: {tempo_decorrido}s | Pontos: {pontos} | Recorde: {recorde} | Vidas: {vidas}"
         )
 
         tela.fill(PRETO)
 
         for meteoro in meteoros:
             tela.blit(meteoro.img, meteoro)
+        tela.blit(frango.img, frango)
         for batata in batatas:
             tela.blit(batata.img, batata)
-        tela.blit(frango.img, frango)
+
+        pygame.draw.rect(tela, (255, 0, 0), batata, 2)
+        pygame.draw.rect(tela, (255, 0, 0), meteoro, 2)
 
         pygame.display.flip()
 

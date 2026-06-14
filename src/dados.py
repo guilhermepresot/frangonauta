@@ -17,3 +17,8 @@ def carregar_recorde(caminho_arquivo):
 
     except FileNotFoundError:
         return 0
+    
+def salvar_ranking(caminho_arquivo, pontuação):
+    #salva as pontuações em um ranking
+    with open(caminho_arquivo, "a", encoding="utf-8") as arquivo:
+        conteudo = arquivo.write(f"{pontuação}\n")
