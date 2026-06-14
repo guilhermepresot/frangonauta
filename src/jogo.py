@@ -17,7 +17,9 @@ from src.funcoes import (
     limitar_valor,
     verificar_colisao,
     tomar_dano,
-    verificar_posicao
+    criar_objeto,
+    movimentacao,
+    movimentacao_batata
 )
 from src.sprites import pegar_sprite
 from src.dados import (
@@ -39,44 +41,81 @@ def executar_jogo():
 
     relogio = pygame.time.Clock()
     rodando = True
-
-    # 1. Carregando as imagens recortadas do Spritesheet
-
-
-    # Jogador: usando tamanho 110x110 para capturar o quadrado perfeitamente
-    player_image = pegar_sprite("assets/imagens/frangonauta.png", x=0, y=0, width=980, height=1080, scale=0.2)
     
-    # Gema pequena: usando tamanho 64x64
-    gem_image    = pegar_sprite("assets/imagens/batata.png", x=0, y=0, width=1400, height=900, scale=0.2)
+    #class do meteoro
+    meteoro_x = LARGURA_TELA
+    meteoro_y = 0
+    meteoro__largura = 182
+    meteoro__altura = 57
+    class Meteoro(pygame.Rect):
+        def __init__(self, img):
+            pygame.Rect.__init__(self, meteoro_x, meteoro_y, meteoro__largura, meteoro__altura)
+            self.img = img
 
-    # Morcego: usando tamanho 180x120 por causa das asas abertas
-    bat_image = pegar_sprite("assets/imagens/Meteor1.png", x=0, y=0, width=1200, height=900, scale=0.15)
-    # 2. Criando a estrutura de Sprites usando Dicionários
+    #class do batata
+    batata_x = LARGURA_TELA
+    batata_y = 0
+    batata__largura = 100/1.5
+    batata__altura = 61/1.5
+    class Batata(pygame.Rect):
+        def __init__(self, img):
+            pygame.Rect.__init__(self, batata_x, batata_y, batata__largura, batata__altura)
+            self.img = img        
+
+    #class do frangonauta
     x_jogador = 150
     y_jogador = 150
-    jogador = {
-        "imagem": player_image,
-        "rect": player_image.get_rect(topleft=(x_jogador, y_jogador))
-    }
+    largura_jogador = 212/1.5
+    altura_jogador = 124
+    class Frango(pygame.Rect):
+        def __init__(self, img):
+            pygame.Rect.__init__(self, x_jogador, y_jogador, largura_jogador, altura_jogador)
+            self.img = img
+            self.passed = False
 
-    gema = {
-        "imagem": gem_image,
-        "rect": gem_image.get_rect(topleft=(500, 300))
-    }
+    #lista de meteoros e batatas que serão criados
+    meteoros = []
+
+    #lista de batatas que serão criados
+    batatas = []
+
+    #imagens dos objetos
+    frango_imagem = pygame.image.load("assets/imagens/frangonauta.png")
+    frango_imagem = pygame.transform.scale(frango_imagem, (largura_jogador, altura_jogador))
+    meteoro_imagem = pygame.image.load("assets/imagens/Meteor1.png")
+    meteoro_imagem = pygame.transform.scale(meteoro_imagem, (meteoro__largura, meteoro__altura))
+    batata_imagem = pygame.image.load("assets/imagens/batata.png")
+    batata_imagem = pygame.transform.scale(batata_imagem, (batata__largura, batata__altura))
     
-    inimigo = {
-        "imagem": bat_image,
-        "rect": bat_image.get_rect(topleft=(LARGURA_TELA ,300))
-    }
+    #atribuição das variáveis
+    frango = (Frango(frango_imagem))
+    meteoro = (Meteoro(meteoro_imagem))
+    batata = (Batata(batata_imagem))
 
-    gravidade = 1
-    velocidade = 150
+    #básicos
+    velocidade_meteoroBatata = -5
+    velocidade_frango = 0
+    gravidade = 0.2
     pontos = 0
-    vidas = 300
+    vidas = 3
     recorde = carregar_recorde(CAMINHO_RECORDE)
 
+    #timer para quando os meteoros são criados
+    criar_meteoro_tempo = pygame.USEREVENT + 0
+    pygame.time.set_timer(criar_meteoro_tempo, 1500) #1.5 segundos
 
-    # Loop principal: processa entrada, atualiza estado e renderiza a cena.
+    #timer para quando as batatas são criadas
+    criar_batata_tempo = pygame.USEREVENT + 1
+    pygame.time.set_timer(criar_batata_tempo, 5000) #5 segundos
+
+    #analisar se já perdeu dano ou recebeu a pontuação do objeto
+    colisão_pontos = False
+    colisão_vida = False
+
+    #timer do estágio
+    timer = pygame.time.get_ticks()
+
+    #loop principal: processa entrada, atualiza estado e renderiza a cena.
     while rodando:
         relogio.tick(FPS)
 
@@ -84,47 +123,49 @@ def executar_jogo():
             if evento.type == pygame.QUIT:
                 rodando = False
 
-        # Movimentação alterando direto o eixo Y do retângulo do jogador
+            if evento.type == criar_meteoro_tempo:
+                criar_objeto(meteoros, meteoro_imagem, Meteoro, ALTURA_TELA)
+
+            if evento.type == criar_batata_tempo:
+                criar_objeto(batatas, batata_imagem, Batata, ALTURA_TELA)
+
             if evento.type == pygame.KEYDOWN:
                 if evento.key == pygame.K_SPACE:
-                    jogador["rect"].y -= velocidade
+                    velocidade_frango = -10
+
+        print(timer)
             
-        # Gravidade   
-        jogador["rect"].y += gravidade
-        inimigo["rect"].x -= 3
+        #função de movimentação dos elementos e gravidade
+        movimentacao(meteoros, velocidade_meteoroBatata, velocidade_frango, meteoro__largura, frango)
+        velocidade_frango += gravidade
+        movimentacao_batata(batatas, velocidade_meteoroBatata)
 
-        # Limitando o jogador dentro das bordas da tela usando as propriedades do Rect
-        jogador["rect"].x = limitar_valor(jogador["rect"].x, 0, LARGURA_TELA - jogador["rect"].width)
-        jogador["rect"].y = limitar_valor(jogador["rect"].y, 0, ALTURA_TELA - jogador["rect"].height)
+        #limite de tela
+        frango.y = max(frango.y, -10)
+        frango.y = min(frango.y, ALTURA_TELA-100)
 
-        # Verificação de colisão com a Gema (antigo 'item')
-        if verificar_colisao(jogador["rect"], gema["rect"]):
-            pontos = calcular_pontos(pontos, 10)
-
-            # Move a gema de lugar ao coletar
-            gema["rect"].x += 80
-            gema["rect"].y += 50
-
-            # Se a gema sair da tela, volta para uma posição segura
-            if gema["rect"].x > LARGURA_TELA - gema["rect"].width:
-                gema["rect"].x = 50
-            if gema["rect"].y > ALTURA_TELA - gema["rect"].height:
-                gema["rect"].y = 50
-
-        # Verificação de colisão com o Inimigo
-        if verificar_colisao(jogador["rect"], inimigo["rect"]):
-            vidas = tomar_dano(vidas, 1)
-
-        if verificar_posicao(inimigo, LARGURA_TELA):
-            # Novo obstáculo
-            numero_aleatorio_y = random.randint(1, ALTURA_TELA)
-            inimigo["rect"].x = LARGURA_TELA
-            inimigo["rect"].y = numero_aleatorio_y
         
-        # Regras de fim de jogo e recorde
+        #regras de fim de jogo e recorde
         if jogador_perdeu(vidas):
             rodando = False
 
+        #pontuação das batatas
+        if verificar_colisao(frango, batata):
+            if colisão_pontos == False:
+                colisão_pontos = True
+                pontos = calcular_pontos(pontos, 15)
+        else:
+            colisão_pontos = False
+
+        #vida restante
+        if verificar_colisao(frango, meteoro):
+            if colisão_vida == False:
+                colisão_vida = True
+                vidas = tomar_dano(vidas, 1)
+        else:
+            colisão_vida = False
+
+        #obtenção de record
         if pontos > recorde:
             recorde = pontos
             salvar_recorde(CAMINHO_RECORDE, recorde)
@@ -135,10 +176,11 @@ def executar_jogo():
 
         tela.fill(PRETO)
 
-        # Desenhando os elementos na tela passando a imagem e o rect de cada dicionário
-        tela.blit(gema["imagem"], gema["rect"])
-        tela.blit(inimigo["imagem"], inimigo["rect"])
-        tela.blit(jogador["imagem"], jogador["rect"])
+        for meteoro in meteoros:
+            tela.blit(meteoro.img, meteoro)
+        for batata in batatas:
+            tela.blit(batata.img, batata)
+        tela.blit(frango.img, frango)
 
         pygame.display.flip()
 

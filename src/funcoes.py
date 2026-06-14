@@ -1,3 +1,5 @@
+import random
+
 def calcular_pontos(pontos_atual, pontos_ganhos):
     """Soma os pontos ganhos à pontuação atual."""
     return pontos_atual + pontos_ganhos
@@ -25,7 +27,26 @@ def limitar_valor(valor, minimo, maximo):
 def verificar_colisao(retangulo_1, retangulo_2):
     """Verifica sobreposição entre dois retângulos do Pygame."""
     return retangulo_1.colliderect(retangulo_2)
+    
+def aleatorizar_posicao(elemento, altura, gerador):
+    elemento.y = gerador(0, altura)
 
-def verificar_posicao(retangulo, largura):
-    if retangulo["rect"].x <= 0:
-        return True
+def criar_objeto(lista, imagem, function, altura, gerador=random.randint):
+    objeto = function(imagem)
+    aleatorizar_posicao(objeto, altura, gerador)
+    lista.append(objeto)
+
+def movimentacao(lista, velocidade_x, velocidade_y, largura, jogador):
+    #seção da movimentação do meteoro
+    for meteoro in lista:
+        meteoro.x += velocidade_x
+    while len(lista) > 0 and lista[0].x + largura < 0:
+        lista.pop(0) #salva memoria de ser gasta com obstáculos antigos
+
+    #seção da movimentação do frango
+    jogador.y += velocidade_y
+
+def movimentacao_batata(lista, velocidade_x):
+    #seção da movimentação da batata
+    for meteoro in lista:
+        meteoro.x += velocidade_x
