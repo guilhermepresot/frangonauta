@@ -45,7 +45,7 @@ def executar_jogo():
     relogio = pygame.time.Clock()
     rodando = True
     
-    #class do meteoro
+    """ class do meteoro"""
     meteoro_x = LARGURA_TELA
     meteoro_y = 0
     meteoro__largura = 214
@@ -55,7 +55,7 @@ def executar_jogo():
             pygame.Rect.__init__(self, meteoro_x, meteoro_y, meteoro__largura, meteoro__altura)
             self.img = img    
     
-    #class do batata
+    """class do batata"""
     batata_x = LARGURA_TELA
     batata_y = 0
     batata__largura = 100/1.5
@@ -65,7 +65,7 @@ def executar_jogo():
             pygame.Rect.__init__(self, batata_x, batata_y, batata__largura, batata__altura)
             self.img = img        
 
-    #class do frangonauta
+    """class do frangonauta"""
     x_jogador = 125
     y_jogador = 150
     largura_jogador = 212/1.5
@@ -76,13 +76,13 @@ def executar_jogo():
             self.img = img
             self.passed = False
 
-    #lista de meteoros e batatas que serão criados
+    """lista de meteoros e batatas que serão criados"""
     meteoros = []
 
-    #lista de batatas que serão criados
+    """lista de batatas que serão criados"""
     batatas = []
 
-    #imagens dos objetos
+    """imagens dos objetos"""
     frango_imagem = pygame.image.load("assets/imagens/frangonauta.png")
     frango_imagem = pygame.transform.scale(frango_imagem, (largura_jogador, altura_jogador))
     meteoro_imagem = pygame.image.load("assets/imagens/Meteor1.png")
@@ -90,39 +90,40 @@ def executar_jogo():
     batata_imagem = pygame.image.load("assets/imagens/batata.png")
     batata_imagem = pygame.transform.scale(batata_imagem, (batata__largura, batata__altura))
     
-    #atribuição das variáveis
+    """atribuição das variáveis"""
     frango = (Frango(frango_imagem))
     meteoro = (Meteoro(meteoro_imagem))
     batata = (Batata(batata_imagem))
 
-    #básicos
-    velocidade_meteoroBatata = -5
+    """básicos"""
+    velocidade_meteoro = -10
+    velocidade_Batata = -5
     velocidade_frango = 0
-    gravidade = 0.2
+    gravidade = 0.35
     pontos = 0
     pontuacoes = []
     pontos_anteriores = pontos
     vidas = 3
     recorde = carregar_recorde(CAMINHO_RECORDE)
     tempo_inicial = pygame.time.get_ticks()
-    TEMPO_VITORIA = 90 # tempo para ganhar o jogo
+    TEMPO_VITORIA = 35 # tempo para ganhar o jogo
 
-    #timer para quando os meteoros são criados
+    """timer para quando os meteoros são criados"""
     criar_meteoro_tempo = pygame.USEREVENT + 0
-    pygame.time.set_timer(criar_meteoro_tempo, 2000) #2 segundos
+    pygame.time.set_timer(criar_meteoro_tempo, 1000) #1 segundos
 
-    #timer para quando as batatas são criadas
+    """timer para quando as batatas são criadas"""
     criar_batata_tempo = pygame.USEREVENT + 2
-    pygame.time.set_timer(criar_batata_tempo, 3000) #3 segundos
+    pygame.time.set_timer(criar_batata_tempo, 2000) #2 segundos
 
-    #analisar se já perdeu dano ou recebeu a pontuação do objeto
+    """analisar se já perdeu dano ou recebeu a pontuação do objeto"""
     colisão_pontos = False
     colisão_vida = False
 
-    #timer do estágio
+    """timer do estágio"""
     timer = pygame.time.get_ticks()
 
-    #loop principal: processa entrada, atualiza estado e renderiza a cena.
+    """loop principal: processa entrada, atualiza estado e renderiza a cena."""
     while rodando:
 
         tempo_decorrido = (pygame.time.get_ticks() - tempo_inicial) // 1000
@@ -148,17 +149,17 @@ def executar_jogo():
                 if evento.key == pygame.K_SPACE:
                     velocidade_frango = -10
             
-        #função de movimentação dos elementos e gravidade
+        """função de movimentação dos elementos e gravidade"""
         movimentacao_jogador(velocidade_frango, frango)
         velocidade_frango += gravidade
-        movimentacao_objeto(batatas, velocidade_meteoroBatata)
-        movimentacao_objeto(meteoros, velocidade_meteoroBatata)
+        movimentacao_objeto(batatas, velocidade_Batata)
+        movimentacao_objeto(meteoros, velocidade_meteoro)
 
-        #limite de tela
+        """limite de tela"""
         frango.y = max(frango.y, -10)
         frango.y = min(frango.y, ALTURA_TELA-100)
 
-        #mensagens de fim de jogo e recorde
+        """mensagens de fim de jogo e recorde"""
         if jogador_perdeu(vidas):
             game_over = exibe_mensagem("PERDEU O JOGO!", 40, ( 100 , 0 , 0 ) )
             tela.blit( game_over , (LARGURA_TELA // 2 , ALTURA_TELA // 2 ) )
@@ -166,7 +167,7 @@ def executar_jogo():
             pygame.time.wait(4000)  # espera 4 segundos para aparecer a mensagem
             rodando = False
 
-        #pontuação das batatas
+        """pontuação das batatas"""
         if verificar_colisao(frango, batata):
             if colisão_pontos == False:
                 colisão_pontos = True
@@ -175,7 +176,7 @@ def executar_jogo():
         else:
             colisão_pontos = False
 
-        #vida restante
+        """vida restante"""
         if verificar_colisao(frango, meteoro):
             if colisão_vida == False:
                 colisão_vida = True
@@ -183,17 +184,17 @@ def executar_jogo():
         else:
             colisão_vida = False
 
-        #listando as pontuações da partida atual
+        """listando as pontuações da partida atual"""
         if pontos > pontos_anteriores:
             pontuacoes.append(pontos)
         pontos_anteriores
 
-        #obtenção de record
+        """obtenção de record"""
         if pontos > recorde:
             recorde = pontos
             salvar_recorde(CAMINHO_RECORDE, recorde)
 
-        #obtenção do ranking
+        """obtenção do ranking"""
         if pontos != pontos_anteriores:
             salvar_ranking(CAMINHO_RANKING, pontos)
 
@@ -208,9 +209,6 @@ def executar_jogo():
         tela.blit(frango.img, frango)
         for batata in batatas:
             tela.blit(batata.img, batata)
-
-        pygame.draw.rect(tela, (255, 0, 0), batata, 2)
-        pygame.draw.rect(tela, (255, 0, 0), meteoro, 2)
 
         pygame.display.flip()
 

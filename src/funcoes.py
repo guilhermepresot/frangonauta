@@ -34,11 +34,11 @@ def criar_objeto(lista, imagem, function, altura, gerador=random.randint):
     lista.append(objeto)
 
 def movimentacao_jogador(velocidade_y, jogador):
-    #seção da movimentação do frango
+    """Seção da movimentação do frango"""
     jogador.y += velocidade_y
 
 def movimentacao_objeto(lista, velocidade_x):
-    #seção da movimentação dos objetos
+    """Seção da movimentação dos objetos"""
     for objeto in lista:
         objeto.x += velocidade_x
 
