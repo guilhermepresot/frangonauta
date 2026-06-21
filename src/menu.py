@@ -5,8 +5,10 @@ from src.config import (
     TITULO_JOGO,
     AZUL,
     VERDE,
-    BRANCO
+    BRANCO,
+    VERMELHO
 )
+from src.fim import ranking
 
 def menu(recorde):
     pygame.init()
@@ -33,11 +35,20 @@ def menu(recorde):
         tela.blit(texto_recorde, (recorde_menu.x + recorde_menu.width//2 - texto_recorde.get_width()//2,
                                 recorde_menu.y + recorde_menu.height//2 - texto_recorde.get_height()//2))
 
+        botao_ranking = pygame.Rect(300, 450, 200, 60)
+        pygame.draw.rect(tela, VERMELHO, botao_ranking)
+        texto_ranking = fonte_pequena.render("RANKING", True, BRANCO)
+        tela.blit(texto_ranking, (botao_ranking.x + botao_ranking.width//2 - texto_ranking.get_width()//2,
+                                botao_ranking.y + botao_ranking.height//2 - texto_ranking.get_height()//2))
+
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
                 return False  
             if evento.type == pygame.MOUSEBUTTONDOWN:
                 if botao.collidepoint(evento.pos):
-                    return True  
-
+                    return True
+                if botao_ranking.collidepoint(evento.pos):
+                    ranking()
+                    tela = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
+                    pygame.display.set_caption("Menu")
         pygame.display.flip()

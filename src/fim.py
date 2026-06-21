@@ -16,7 +16,7 @@ from src.dados import (
 def ranking():
     pygame.init()
     tela = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
-    pygame.display.set_caption("Perdeu")
+    pygame.display.set_caption("Ranking")
     fonte = pygame.font.SysFont("Arial", 48)
     fonte_pequena = pygame.font.SysFont("Arial", 32)
     lista_rank = ler_ranking(CAMINHO_RANKING)
