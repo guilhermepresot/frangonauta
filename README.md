@@ -22,7 +22,7 @@ Este repositório é um template para os grupos da disciplina. A proposta é com
 
 ## Descrição do jogo
 
-Na tela inicial, deve aparecer para iniciar o jogo e o ranking das jogadas feitas, após iniciar a partida, deve aparecer o frango astronauta, em conjunto com os obstáculos, a temperatura atual do frango, possíveis maneiras de aumentar a temperatura dele e batatas assadas (pontuação). O jogador controla a movimentação do frangonauta, além disso, ele deve desviar dos obstáculos, obter o calor necessário para manter o frango quente para não congelar no espaço e coletar o maior número possível de batatas assadas para aumentar a pontuação final. Durante a partida, o jogador deve ter cuidado com dois principais desafios, os meteoros (obstáculos) e com o frio (sobrevivência).
+Na tela inicial, deve aparecer para iniciar o jogo e o ranking das jogadas feitas, após iniciar a partida, deve aparecer o frango astronauta, em conjunto com os obstáculos e batatas assadas (pontuação). O jogador controla a movimentação do frangonauta, além disso, ele deve desviar dos obstáculos e coletar o maior número possível de batatas assadas para aumentar a pontuação final. Durante a partida, o jogador deve ter cuidado com um desafio principal, os meteoros (obstáculos).
 
 ## Objetivo do jogador
 
@@ -30,16 +30,13 @@ Coletar o maior número possível de itens, evitar obstáculos e chegar até o f
 
 ## Regras do jogo
 
-- Regra 1: O frangonauda começa com 40°C;
-- Regra 2: A partida termina quando o jogador atinge algum obstáculo ou a temperatura chegue a 0°C;
-- Regra 3: Cada batata coletada vale 15 pontos;
-- Regra 4: O jogador vence quando chega ao final do mapa;
-- Regra 5: O jogador tem 90 segundos para fazer a tentativa;
-- Regra 6: A temperatura do franngonauta diminui a cada 5 segundos.
+- Regra 1: Cada batata coletada vale 15 pontos;
+- Regra 2: O jogador vence quando chega ao final do mapa;
+- Regra 3: O jogador tem 30 segundos para fazer a tentativa;
 
 ## Controles
 
-Espaço: salto e ESC: sair do jogo
+Espaço: salto
 
 ## Como executar o projeto
 

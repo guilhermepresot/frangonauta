@@ -196,7 +196,7 @@ def executar_jogo():
         else:
             colisão_vida = False
 
-        """oOtenção de record"""
+        """Obtenção de record"""
         if pontos > recorde:
             recorde = pontos
             salvar_recorde(CAMINHO_RECORDE, recorde)

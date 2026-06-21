@@ -35,6 +35,7 @@ def movimentacao_objeto(lista, velocidade_x):
         objeto.x += velocidade_x
 
 def exibe_mensagem(msg, tamanho, cor):
+    """Exibe uma mensagem na tela padronizada"""
     fonte = pygame.font.SysFont("Arial", tamanho, True, False)
     mensagem = f'{msg}'
     texto_formato = fonte.render(mensagem, True, cor)

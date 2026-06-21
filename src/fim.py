@@ -20,7 +20,7 @@ def ranking():
     """Tela de ranking no final do jogo"""
     pygame.init()
     tela = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
-    pygame.display.set_caption("Perdeu")
+    pygame.display.set_caption("Ranking")
     fonte = pygame.font.SysFont("Arial", 48)
     fonte_pequena = pygame.font.SysFont("Arial", 32)
     lista_rank = ler_ranking(CAMINHO_RANKING)
@@ -64,7 +64,7 @@ def ranking():
 
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
-                rodando = False  
+                return False  
             
         pygame.display.flip()
 
@@ -103,13 +103,13 @@ def salvo(pontos):
 
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
-                rodando = False  
+                return False  
             if evento.type == pygame.MOUSEBUTTONDOWN:
                 if botao.collidepoint(evento.pos):
                     salvar_ranking(nome_escrita, CAMINHO_RANKING, pontos)
                     reordenar_ranking(CAMINHO_RANKING)
                     ranking()
-                    rodando = False
+                    return False
             if evento.type == pygame.KEYDOWN:
                 if evento.key == pygame.K_BACKSPACE:
                     nome_escrita = nome_escrita[:-1]
