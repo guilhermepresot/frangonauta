@@ -34,16 +34,16 @@ def criar_objeto(lista, imagem, function, altura, gerador=random.randint):
     lista.append(objeto)
 
 def movimentacao_jogador(velocidade_y, jogador):
-    #seção da movimentação do frango
+    """Seção da movimentação do frango"""
     jogador.y += velocidade_y
 
 def movimentacao_objeto(lista, velocidade_x):
-    #seção da movimentação dos objetos
+    """Seção da movimentação dos objetos"""
     for objeto in lista:
         objeto.x += velocidade_x
 
 def exibe_mensagem(msg, tamanho, cor):
-    fonte = pygame.font.SysFont("comicsansms", tamanho, True, False)
+    fonte = pygame.font.SysFont("Arial", tamanho, True, False)
     mensagem = f'{msg}'
     texto_formato = fonte.render(mensagem, True, cor)
     return texto_formato
