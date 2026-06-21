@@ -4,7 +4,9 @@ Pasta destinada a sprites, fundos, icones e outros elementos visuais.
 
 ## Conteudo atual
 
-- `spritesheet.bmp`: spritesheet base do template.
+- `batata.png`: imagem da pontuação do jogo.
+- `frangonauta.png`: imagem do jogador.
+- `Meteor1.png`: imagem do obstáculo do jogo.
 
 ## Recomendações
 

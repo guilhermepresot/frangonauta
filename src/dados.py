@@ -31,6 +31,7 @@ def salvar_ranking(nome, caminho_arquivo, pontuação):
             conteudo = arquivo.write(f"{nome} {pontuação}\n")
 
 def reordenar_ranking(caminho_arquivo):
+    """Reordena as posições do ranking para os de maior pontuação para menor"""
     conteudo = ler_ranking(caminho_arquivo)
     pares = []
     for i in range(0, len(conteudo), 2):

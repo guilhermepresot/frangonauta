@@ -17,46 +17,43 @@ Jogo de sobrevivência por tempo com desvio de obstáculos.
 
 ## 4. Descrição geral do jogo
 
-Na tela inicial aparecem a opção de iniciar o jogo e o ranking das partidas anteriores. Após iniciar, o jogador controla o Frangonauta (um frango astronauta que se move pelo espaço usando as setas do teclado). Na tela aparecem meteoros como obstáculos, itens de fogo para aquecer o frango e batatas assadas para pontuar. O jogador deve sobreviver os 90 segundos completos desviando dos meteoros, coletando fogo para manter a temperatura acima de 0 °C e coletando batatas para maximizar a pontuação final.
+Na tela inicial aparecem a opção de iniciar o jogo e o ranking das partidas anteriores. Após iniciar, o jogador controla o Frangonauta (um frango astronauta que se move pelo espaço usando as setas do teclado). Na tela aparecem meteoros como obstáculos e batatas assadas para pontuar. O jogador deve sobreviver os 30 segundos completos desviando dos meteoros e coletando batatas para maximizar a pontuação final.
 
 ## 5. Objetivo do jogador
 
-Sobreviver pelo tempo máximo de 90 segundos, mantendo a temperatura do Frangonauta acima de 0 °C e coletando o maior número possível de batatas assadas para atingir a maior pontuação no ranking.
+Sobreviver pelo tempo máximo de 30 segundos e coletando o maior número possível de batatas assadas para atingir a maior pontuação no ranking.
 
 ## 6. Regras principais
 
-- O Frangonauta começa com 40°C de temperatura;
-- A temperatura diminui 8 °C a cada 5 segundos;
-- Coletar um item de fogo aumenta a temperatura em 20 °C;
 - Cada batata assada coletada vale 15 pontos;
-- A partida termina se o jogador colidir com um meteoro ou se a temperatura chegar a 0 °C;
-- O jogador vence se sobreviver os 90 segundos completos.
+- A partida termina se o jogador perder todas as vidas;
+- O jogador vence se sobreviver os 30 segundos completos.
 
 ## 7. Condição de vitória
 
-Completar os 90 segundos sem que a temperatura chegue a 0 °C.
+Completar os 30 segundos=
 
 ## 8. Condição de derrota ou encerramento
 
-A partida termina quando o Frangonauta colide com um meteoro ou quando sua temperatura atinge 0 °C.
+A partida termina quando o Frangonauta colide com um meteoro 3 vezes
 
 ## 9. Elementos previstos no jogo
 
 ## Jogador ou elemento principal
 
-O Frangonauta, controlado pelas setas do teclado (cima, baixo, esquerda, direita), movendo-se livremente pela tela.
+O Frangonauta, controlado pelo espaço, pode se mover apenas no eixo y
 
 ## Obstáculos, inimigos ou desafios
 
-Meteoros surgem em posições aleatórias na tela e devem ser evitados. O frio é um desafio constante: a temperatura cai a cada 5 segundos de partida.
+Meteoros surgem em posições aleatórias na tela e devem ser evitados.
 
 ## Itens, alvos ou objetos de interação
 
-Batatas assadas aparecem na tela e valem 15 pontos cada ao serem coletadas. Itens de fogo aparecem na tela e aumentam a temperatura do Frangonauta em 20 °C ao serem coletados.
+Batatas assadas aparecem na tela e valem 15 pontos cada ao serem coletadas.
 
 ## Pontuação, vidas, tempo ou progresso
 
-O Frangonauta começa com 40 °C. A temperatura cai 8 °C a cada 5 segundos. O jogador tem 90 segundos para sobreviver e acumular pontos com as batatas coletadas.
+O jogador tem e0 segundos para sobreviver e acumular pontos com as batatas coletadas.
  
 ## 10. Controles previstos
 
@@ -68,8 +65,10 @@ O Frangonauta começa com 40 °C. A temperatura cai 8 °C a cada 5 segundos. O j
 - `main.py`: inicia o jogo;
 - `src/jogo.py`: contém o loop principal, usa listas para meteoros, itens de fogo e batatas na tela;
 - `src/config.py`: guarda configurações como tamanho da tela e cores;
-- `src/funcoes.py`: contém funções auxiliares, inclui funções de colisão e controle de temperatura, que serão testadas;
-- `src/dados.py`: contém funções de leitura e escrita de arquivos, salva e carrega o ranking (nome e pontuação) em arquivo .txt ou .json; usa lista de dicionários.
+- `src/funcoes.py`: contém funções auxiliares, inclui funções de colisão e de movimentção, que serão testadas;
+- `src/dados.py`: contém funções de leitura e escrita de arquivos, salva e carrega o ranking (nome e pontuação) em arquivo .txt; usa lista de dicionários.
+- `src/fim.py`: contém dois loops finais, um para salvar a pontuação e outro para mostrar o ranking;
+- `src/menu.py`: contém o loop inicial, nele aparece para começar o jogo, o record e o ranking final;
 
 ## 12. Recursos externos previstos
 
@@ -86,7 +85,7 @@ O Frangonauta começa com 40 °C. A temperatura cai 8 °C a cada 5 segundos. O j
 ## 14. Principais dificuldades esperadas
 
 - Colisão entre objetos
-- Controle de tempo e queda de temperatura
+- Criação do Ranking
 - Organização do código
 - Uso do GitHub
 - Testes
@@ -94,13 +93,13 @@ O Frangonauta começa com 40 °C. A temperatura cai 8 °C a cada 5 segundos. O j
 
 ## 15. Escopo mínimo para a entrega final
 
-A versão mínima do jogo contará com: o Frangonauta controlado pelas setas do teclado; meteoros surgindo aleatoriamente e que devem ser desviados; sistema de temperatura (começa em 40 °C, cai 8 °C cada 5 segundos e encerra o jogo ao chegar a 0 °C); itens de fogo que recuperam temperatura; sistema de pontuação com batatas assadas; contador de 90 segundos; e tela de fim de jogo com pontuação.
+A versão mínima do jogo contará com: o Frangonauta controlado pelas setas do teclado; meteoros surgindo aleatoriamente e que devem ser desviados; sistema de pontuação com batatas assadas; contador de 30 segundos; e tela de fim de jogo com pontuação e ranking.
 
 ## 15. Possíveis melhorias, caso haja tempo
 
 - Tela inicial com menu e ranking
 - Animações do personagem e dos objetos
-- Aumento progressivo de dificuldade (mais meteoros, queda de temperatura mais rápida)
+- Aumento progressivo de dificuldade (mais meteoros)
 - Diferentes personagens selecionáveis
 - Menu de pausa
 - Sons e trilha sonora

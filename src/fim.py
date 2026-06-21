@@ -12,8 +12,12 @@ from src.dados import (
     ler_ranking,
     reordenar_ranking
 )
+from src.funcoes import (
+    tamanho_texto
+)
 
 def ranking():
+    """Tela de ranking no final do jogo"""
     pygame.init()
     tela = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
     pygame.display.set_caption("Perdeu")
@@ -21,7 +25,6 @@ def ranking():
     fonte_pequena = pygame.font.SysFont("Arial", 32)
     lista_rank = ler_ranking(CAMINHO_RANKING)
     lista = True
-    posicao_ranking = 1
     
     rodando = True
     while rodando: 
@@ -32,15 +35,18 @@ def ranking():
         nome = pygame.Rect(100, 175, 200, 60)
         pontuacao = pygame.Rect(500, 175, 200, 60)
 
-        if len(lista_rank) <= 5:
-            for valor in range(len(lista_rank)):
+        """Criação do Ranking separado em Nome e Pontuação"""
+        len_rank = tamanho_texto(lista_rank)
+        if len_rank <= 5:
+            for valor in range(len_rank):
+                """Cria o ranking com o limite de 5 pessoas"""
                 if lista:
                     if valor%2 == 0:
                         texto_nome = fonte_pequena.render(f"Nome: {lista_rank[valor]}", True, BRANCO)
                         tela.blit(texto_nome, (nome.x, nome.y))
                         nome.y += 75
                     else:
-                        texto_pontuacao = fonte_pequena.render(f"Pontuacao: {lista_rank[valor]}", True, BRANCO)
+                        texto_pontuacao = fonte_pequena.render(f"Pontuação: {lista_rank[valor]}", True, BRANCO)
                         tela.blit(texto_pontuacao, (pontuacao.x, pontuacao.y))
                         pontuacao.y += 75
         else:
@@ -51,7 +57,7 @@ def ranking():
                         tela.blit(texto_nome, (nome.x, nome.y))
                         nome.y += 75
                     else:
-                        texto_pontuacao = fonte_pequena.render(f"Pontuacao: {lista_rank[valor]}", True, BRANCO)
+                        texto_pontuacao = fonte_pequena.render(f"Pontuação: {lista_rank[valor]}", True, BRANCO)
                         tela.blit(texto_pontuacao, (pontuacao.x, pontuacao.y))
                         pontuacao.y += 75
         lista = False
@@ -70,7 +76,8 @@ def salvo(pontos):
     fonte = pygame.font.SysFont("Arial", 48)
     fonte_pequena = pygame.font.SysFont("Arial", 32)
     box_nome = pygame.Rect(300,250,200,60)
-    nome_escrita = ""
+    
+    nome_escrita = "" #Variável para quando for escrevendo na tela, ela ir mudando e salvando
     
     rodando = True
     while rodando: 
@@ -78,13 +85,16 @@ def salvo(pontos):
         titulo = fonte.render(f"Nome", True, BRANCO)
         tela.blit(titulo, (LARGURA_TELA//2 - titulo.get_width()//2, 150))
         
+        """Botão para salvar ou não sua pontuação no sistema"""
         botao = pygame.Rect(300, 350, 200, 60)
         if nome_escrita != "":
+            """Salva, mas é preciso inserir um nome para registro antes"""
             pygame.draw.rect(tela, AZUL, botao)
             texto_jogar = fonte_pequena.render("Salvar", True, BRANCO)
             tela.blit(texto_jogar, (botao.x + botao.width//2 - texto_jogar.get_width()//2,
                                     botao.y + botao.height//2 - texto_jogar.get_height()//2))
         else:
+            """Não salva"""
             pygame.draw.rect(tela, VERMELHO, botao)
             texto_jogar = fonte_pequena.render("Não salvar", True, BRANCO)
             tela.blit(texto_jogar, (botao.x + botao.width//2 - texto_jogar.get_width()//2,

@@ -13,14 +13,6 @@ def jogador_perdeu(vidas):
     """Indica se o jogador ficou sem vidas."""
     return vidas <= 0
 
-def limitar_valor(valor, minimo, maximo):
-    """Mantém um valor dentro do intervalo [minimo, maximo]."""
-    if valor < minimo:
-        return minimo
-    if valor > maximo:
-        return maximo
-    return valor
-
 def verificar_colisao(retangulo_1, retangulo_2):
     """Verifica sobreposição entre dois retângulos do Pygame."""
     return retangulo_1.colliderect(retangulo_2)
@@ -47,3 +39,7 @@ def exibe_mensagem(msg, tamanho, cor):
     mensagem = f'{msg}'
     texto_formato = fonte.render(mensagem, True, cor)
     return texto_formato
+
+def tamanho_texto(lista):
+    """Informa o tamanho do parâmetro"""
+    return len(lista)

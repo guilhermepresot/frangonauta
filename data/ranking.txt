@@ -1,2 +1,1 @@
-caralho 255
-mp 225
+mp 6
