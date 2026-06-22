@@ -103,10 +103,10 @@ def executar_jogo():
     velocidade_frango = 0
     gravidade = 0.35
     pontos = 0
-    vidas = 3
+    vidas = 10000
     recorde = carregar_recorde(CAMINHO_RECORDE)
     tempo_inicial = pygame.time.get_ticks()
-    TEMPO_VITORIA = 5 # tempo para ganhar o jogo
+    TEMPO_VITORIA = 30 # tempo para ganhar o jogo
     fonte_pontuacoes = pygame.font.SysFont(None, 25)
     ganhou = False
 
@@ -137,6 +137,7 @@ def executar_jogo():
             pygame.display.flip()
             pygame.time.wait(4000)  # espera 4 segundos para a tela fechar
             executar_jogo()
+            return
 
         """Mensagem de vitória"""
         if tempo_decorrido >= TEMPO_VITORIA:
@@ -162,6 +163,11 @@ def executar_jogo():
             if evento.type == pygame.KEYDOWN:
                 if evento.key == pygame.K_SPACE:
                     velocidade_frango = -10
+
+            """Tecla de terminar o jogo"""
+            if evento.type == pygame.KEYDOWN:
+                if evento.key == pygame.K_ESCAPE:
+                    rodando = False
             
         """Função de movimentação dos elementos e gravidade"""
         movimentacao_jogador(velocidade_frango, frango)

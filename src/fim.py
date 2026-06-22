@@ -37,7 +37,7 @@ def ranking():
 
         """Criação do Ranking separado em Nome e Pontuação"""
         len_rank = tamanho_texto(lista_rank)
-        if len_rank <= 5:
+        if len_rank  <= 5:
             for valor in range(len_rank):
                 """Cria o ranking com o limite de 5 pessoas"""
                 if lista:
