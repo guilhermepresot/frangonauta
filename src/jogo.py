@@ -103,7 +103,7 @@ def executar_jogo():
     velocidade_frango = 0
     gravidade = 0.35
     pontos = 0
-    vidas = 10000
+    vidas = 3
     recorde = carregar_recorde(CAMINHO_RECORDE)
     tempo_inicial = pygame.time.get_ticks()
     TEMPO_VITORIA = 30 # tempo para ganhar o jogo
